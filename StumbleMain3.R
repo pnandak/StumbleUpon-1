@@ -114,18 +114,6 @@ for (i in 1:length(distributions)){
 
 plot(rocs)
 
-
-#Cross Validate best features
-#features <- c('predictionTrain', 'boilerplatesSentimentTrain', 'categories', 'trainData$linkwordscore', 'log(trainData$numberOfLinks)')
-#combinations <- list('C(1, 2)', 'C(1, 3)', 'C(1, 4)', 'C(1, 5)', 
-#                     'C(1, 2, 3)', 'C(1, 2, 4)', 'C(1, 2, 5)', 
-#                     'C(1, 2, 3, 4, 5)', 'C(1, 2, 3, 4)')
-
-#featuresTry = list(cbind(predictionTrain, boilerplatesSentimentTrain, categories, trainData$linkwordscore, log(trainData$numberOfLinks)), 
-#                    (cbind(predictionTrain, boilerplatesSentimentTrain, categories, trainData$linkwordscore)))
-  
-#rocs <- rep(0, length(featuresTry))
-
 #Test lambda values, doin' it wrong
 cvglmnetModel1 <- cv.glmnet(boilerplatesTrain[indexTrain, ], y[indexTrain], nfolds = 10)
 predictionTrain <- predict(cvglmnetModel1$glmnet.fit, boilerplatesTrain[indexCV, ])
@@ -179,6 +167,3 @@ label[label > 1] <- 1
 urlid <- testData$urlid
 write.csv(cbind(urlid, label), file = "predictionXXVI.csv", row.names = FALSE, col.names = c('urlid', 'label'))
 
-sapply(names(trainData), anonFun <- function(x, y){
-  cor(y, trainData$paste0(x))
-  }, y)
